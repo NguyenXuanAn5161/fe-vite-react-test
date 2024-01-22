@@ -1,8 +1,19 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import Footer from "./components/Footer/index";
+import Header from "./components/Header/index";
+import HomePage from "./components/Home";
+import BookPage from "./pages/book";
+import ContactPage from "./pages/contact";
 import LoginPage from "./pages/login";
 
 const Layout = () => {
-  return <div>main page</div>;
+  return (
+    <div className="layout-app">
+      <Header />
+      <Outlet />
+      <Footer />
+    </div>
+  );
 };
 
 export default function App() {
@@ -11,6 +22,17 @@ export default function App() {
       path: "/",
       element: <Layout />,
       errorElement: <div>404 not found</div>,
+      children: [
+        { index: true, element: <HomePage /> },
+        {
+          path: "contact",
+          element: <ContactPage />,
+        },
+        {
+          path: "book",
+          element: <BookPage />,
+        },
+      ],
     },
     {
       path: "/login",
