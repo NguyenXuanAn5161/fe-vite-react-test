@@ -6,4 +6,4 @@ React test fresher
 
 ---
 
-Link deloy Vercel: [Test nhanh website tại đây](https://fe-vite-react-test.vercel.app/)
+Link deloy Vercel: [(auto update) test nhanh website tại đây](https://fe-vite-react-test-git-main-nguyen-xuan-ans-projects.vercel.app/)
