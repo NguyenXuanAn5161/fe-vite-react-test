@@ -6,6 +6,7 @@ React test fresher
 - Andt 5
 - Sass 1
 - Axios 1
+- React-spinners 0
 
 ---
 

@@ -38,7 +38,7 @@ const RegisterPage = () => {
         }}
       >
         <div className="register-header">
-          <h3 style={{ textAlign: "center" }}>Đăng ký tài khoản</h3>
+          <h1 style={{ textAlign: "center" }}>Đăng ký tài khoản</h1>
         </div>
         <Divider />
         <Form
@@ -120,7 +120,10 @@ const RegisterPage = () => {
         <p>
           Đã có tài khoản?
           <span className="text-normal">
-            <Link style={{ textDecoration: "none " }} to="/login">
+            <Link
+              style={{ textDecoration: "none", color: "#1677ff" }}
+              to="/login"
+            >
               {" "}
               Đăng nhập
             </Link>
