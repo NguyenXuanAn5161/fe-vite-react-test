@@ -4,7 +4,12 @@ const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const instance = axios.create({
   baseURL: baseURL,
+  withCredentials: true,
 });
+
+instance.defaults.headers.common = {
+  Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+};
 
 // You can intercept requests or responses before they are handled by then or catch.
 // Add a request interceptor
