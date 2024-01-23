@@ -5,6 +5,7 @@ import HomePage from "./components/Home";
 import BookPage from "./pages/book";
 import ContactPage from "./pages/contact";
 import LoginPage from "./pages/login";
+import RegisterPage from "./pages/register/index";
 
 const Layout = () => {
   return (
@@ -37,6 +38,10 @@ export default function App() {
     {
       path: "/login",
       element: <LoginPage />,
+    },
+    {
+      path: "/register",
+      element: <RegisterPage />,
     },
   ]);
 
