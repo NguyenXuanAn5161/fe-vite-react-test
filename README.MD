@@ -4,6 +4,8 @@ React test fresher
 - Redux Toolkit
 - Vite 4
 - Andt 5
+- Sass 1
+- Axios 1
 
 ---
 

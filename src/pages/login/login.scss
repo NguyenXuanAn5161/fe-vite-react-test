@@ -1,0 +1,16 @@
+.login-container {
+    background-color: #f2f4fc;
+    height: 100vh;
+    padding-top: 2%;
+    .login-form {
+        padding: 1%;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 5px 5px rgba(0, 0, 0, 0.06);
+        .text-normal {
+            text-decoration: none;
+            color: rgb(46, 119, 255);
+            font-weight: 700;
+        }
+    }
+}
