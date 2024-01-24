@@ -7,6 +7,7 @@ React test fresher
 - Sass 1
 - Axios 1
 - React-spinners 0
+- React-icons 5
 
 ---
 
