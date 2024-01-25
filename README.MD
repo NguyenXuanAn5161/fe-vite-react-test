@@ -8,6 +8,8 @@ React test fresher
 - Axios 1
 - React-spinners 0
 - React-icons 5
+- Moment 2
+- Xlsx 0.18.5
 
 ---
 

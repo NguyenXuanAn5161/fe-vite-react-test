@@ -1,7 +1,7 @@
 import { Button, Col, Form, Input, Row, theme } from "antd";
 import React from "react";
 
-const AdvancedSearchForm = () => {
+const InputSearch = (props) => {
   const { token } = theme.useToken();
   const [form] = Form.useForm();
 
@@ -12,8 +12,25 @@ const AdvancedSearchForm = () => {
     padding: 24,
   };
 
+  // optimize code field to search by use foreach field search
+
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    let query = "";
+    if (values.fullName) {
+      query += `&fullName=/${values.fullName}/i`;
+    }
+
+    if (values.email) {
+      query += `&email=/${values.email}/i`;
+    }
+
+    if (values.phone) {
+      query += `&phone=/${values.phone}/i`;
+    }
+
+    if (query) {
+      props.handleSearch(query);
+    }
   };
 
   return (
@@ -56,15 +73,16 @@ const AdvancedSearchForm = () => {
       <Row>
         <Col span={24} style={{ textAlign: "right" }}>
           <Button type="primary" htmlType="submit">
-            Search
+            Tìm
           </Button>
           <Button
             style={{ margin: "0 8px" }}
             onClick={() => {
               form.resetFields();
+              props.setFilter("");
             }}
           >
-            Clear
+            Xóa trắng
           </Button>
           {/* <a
                         style={{ fontSize: 12 }}
@@ -77,14 +95,6 @@ const AdvancedSearchForm = () => {
         </Col>
       </Row>
     </Form>
-  );
-};
-
-const InputSearch = () => {
-  return (
-    <div>
-      <AdvancedSearchForm />
-    </div>
   );
 };
 

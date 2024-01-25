@@ -1,11 +1,10 @@
-import { DownOutlined } from "@ant-design/icons";
-import { Badge, Divider, Drawer, Dropdown, Space, message } from "antd";
+import { Avatar, Badge, Divider, Drawer, Dropdown, Space, message } from "antd";
 import React, { useState } from "react";
 import { FaAlignJustify, FaReact } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
 import { VscSearchFuzzy } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { doLogoutAction } from "../../redux/account/accountSlice";
 import { callLogout } from "../../services/api";
 import "./header.scss";
@@ -26,7 +25,7 @@ const Header = () => {
     }
   };
 
-  const items = [
+  let items = [
     {
       label: <label style={{ cursor: "pointer" }}>Quản lý tài khoản</label>,
       key: "account",
@@ -40,6 +39,17 @@ const Header = () => {
       key: "logout",
     },
   ];
+
+  if (user?.role === "ADMIN") {
+    items.unshift({
+      label: <Link to="/admin">Trang quản trị</Link>,
+      key: "admin",
+    });
+  }
+
+  const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${
+    user?.avatar
+  }`;
 
   return (
     <>
@@ -82,12 +92,10 @@ const Header = () => {
                   <span onClick={() => navigate("/login")}> Tài khoản</span>
                 ) : (
                   <Dropdown menu={{ items }} trigger={["click"]}>
-                    <a onClick={(e) => e.preventDefault()}>
-                      <Space>
-                        Hi, {user?.fullName}
-                        <DownOutlined />
-                      </Space>
-                    </a>
+                    <Space>
+                      <Avatar src={urlAvatar} />
+                      {user?.fullName}
+                    </Space>
                   </Dropdown>
                 )}
               </li>
