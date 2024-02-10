@@ -1,4 +1,12 @@
-import { Button, Col, Row, Table } from "antd";
+import {
+  Button,
+  Col,
+  Popconfirm,
+  Row,
+  Table,
+  message,
+  notification,
+} from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import {
@@ -9,7 +17,7 @@ import {
   AiOutlineReload,
 } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
-import { callFetchListUser } from "../../../services/api";
+import { callDeleteUser, callFetchListUser } from "../../../services/api";
 import InputSearch from "./InputSearch";
 import UserModalCreate from "./UserModalCreate";
 import UserModalUpdate from "./UserModalUpdate";
@@ -58,6 +66,20 @@ const UserTable = () => {
     setIsLoading(false);
   };
 
+  const handleDeleteUser = async (userId) => {
+    const res = await callDeleteUser(userId);
+    if (res && res.data) {
+      message.success("Xoá user thành công!");
+      await fetchUser();
+    } else {
+      notification.error({
+        message: "Đã có lỗi xảy ra!",
+        description: res.message,
+      });
+    }
+  };
+
+  // sau này load động cột này
   const columns = [
     {
       title: "Id",
@@ -106,9 +128,21 @@ const UserTable = () => {
       render: (text, record, index) => {
         return (
           <>
-            <AiOutlineDelete
-              style={{ color: "red", cursor: "pointer", marginRight: 10 }}
-            />
+            <Popconfirm
+              placement="leftTop"
+              title={"Xác nhận xóa người dùng"}
+              description={"Bạn có chắc chắn muốn xóa người dùng này?"}
+              okText="Xác nhận"
+              cancelText="Hủy"
+              onConfirm={() => handleDeleteUser(record._id)}
+            >
+              <span>
+                <AiOutlineDelete
+                  style={{ color: "red", cursor: "pointer", marginRight: 10 }}
+                />
+              </span>
+            </Popconfirm>
+
             <CiEdit
               style={{ color: "#f57800", cursor: "pointer" }}
               onClick={() => {
