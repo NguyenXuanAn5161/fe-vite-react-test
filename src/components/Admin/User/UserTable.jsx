@@ -8,9 +8,11 @@ import {
   AiOutlinePlus,
   AiOutlineReload,
 } from "react-icons/ai";
+import { CiEdit } from "react-icons/ci";
 import { callFetchListUser } from "../../../services/api";
 import InputSearch from "./InputSearch";
 import UserModalCreate from "./UserModalCreate";
+import UserModalUpdate from "./UserModalUpdate";
 import UserViewDetail from "./UserViewDetal";
 import UserExport from "./data/UserExport";
 import UserImport from "./data/UserImport";
@@ -28,6 +30,8 @@ const UserTable = () => {
   const [openModalCreate, setOpenModalCreate] = useState(false);
   const [openModalImport, setOpenModalImport] = useState(false);
   const [openModalExport, setOpenModalExport] = useState(false);
+  const [openModalUpdate, setOpenModalUpdate] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState("");
 
   useEffect(() => {
     fetchUser();
@@ -100,7 +104,20 @@ const UserTable = () => {
     {
       title: "Thao tác",
       render: (text, record, index) => {
-        return <AiOutlineDelete style={{ color: "red" }} />;
+        return (
+          <>
+            <AiOutlineDelete
+              style={{ color: "red", cursor: "pointer", marginRight: 10 }}
+            />
+            <CiEdit
+              style={{ color: "#f57800", cursor: "pointer" }}
+              onClick={() => {
+                setDataUpdate(record);
+                setOpenModalUpdate(true);
+              }}
+            />
+          </>
+        );
       },
     },
   ];
@@ -220,6 +237,14 @@ const UserTable = () => {
         openModalExport={openModalExport}
         setOpenModalExport={setOpenModalExport}
         listUser={listUser}
+      />
+
+      <UserModalUpdate
+        openModalUpdate={openModalUpdate}
+        setOpenModalUpdate={setOpenModalUpdate}
+        dataUpdate={dataUpdate}
+        setDataUpdate={setDataUpdate}
+        fetchUser={fetchUser}
       />
     </>
   );
