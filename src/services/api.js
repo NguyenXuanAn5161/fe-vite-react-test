@@ -24,6 +24,7 @@ export const callLogout = () => {
   return axios.post("/api/v1/auth/logout");
 };
 
+// module User
 export const callFetchListUser = (query) => {
   return axios.get(`/api/v1/user?${query}`);
 };
@@ -47,4 +48,9 @@ export const callUpdateUser = (_id, fullName, phone) => {
 
 export const callDeleteUser = (_id) => {
   return axios.delete(`/api/v1/user/${_id}`);
+};
+
+// module book
+export const callFetchListBook = (query) => {
+  return axios.get(`/api/v1/book?${query}`);
 };
