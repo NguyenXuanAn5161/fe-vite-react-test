@@ -17,7 +17,12 @@ const UserViewDetail = (props) => {
   return (
     <>
       <Drawer
-        title={`Chi tiết ${dataViewDetail?.fullName}`}
+        title={
+          <span>
+            Chi tiết{" "}
+            <span style={{ color: "blue" }}>{dataViewDetail?.fullName}</span>
+          </span>
+        }
         width={"50vw"}
         onClose={onClose}
         open={openViewDetail}
@@ -39,10 +44,10 @@ const UserViewDetail = (props) => {
             <Badge status="processing" text={dataViewDetail?.role} />
           </Descriptions.Item>
           <Descriptions.Item label="Tạo ngày">
-            {moment(dataViewDetail?.createAt).format("DD-MM-YYYY HH:mm:ss")}
+            {moment(dataViewDetail?.createdAt).format("DD-MM-YYYY HH:mm:ss")}
           </Descriptions.Item>
           <Descriptions.Item label="Cập nhật ngày">
-            {moment(dataViewDetail?.updateAt).format("DD-MM-YYYY HH:mm:ss")}
+            {moment(dataViewDetail?.updatedAt).format("DD-MM-YYYY HH:mm:ss")}
           </Descriptions.Item>
         </Descriptions>
       </Drawer>
