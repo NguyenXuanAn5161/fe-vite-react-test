@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import BookTable from "./components/Admin/Book/BookTable";
 import LayoutAdmin from "./components/Admin/LayoutAdmin";
 import UserTable from "./components/Admin/User/UserTable";
 import Footer from "./components/Footer/index";
@@ -88,7 +89,7 @@ export default function App() {
         },
         {
           path: "book",
-          element: <BookPage />,
+          element: <BookTable />,
         },
       ],
     },
