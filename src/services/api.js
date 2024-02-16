@@ -117,3 +117,7 @@ export const callUpdateBook = (
     slider,
   });
 };
+
+export const callDeleteBook = (_id) => {
+  return axios.delete(`/api/v1/book/${_id}`);
+};
