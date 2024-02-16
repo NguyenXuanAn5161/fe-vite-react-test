@@ -105,6 +105,12 @@ const BookViewDetail = (props) => {
               currency: "VND",
             }).format(dataViewDetail?.price ?? 0)}
           </Descriptions.Item>
+          <Descriptions.Item label="Số lượng">
+            {dataViewDetail?.quantity}
+          </Descriptions.Item>
+          <Descriptions.Item label="Đã bán">
+            {dataViewDetail?.sold}
+          </Descriptions.Item>
           <Descriptions.Item label="Thể loại" span={2}>
             <Badge status="processing" text={dataViewDetail?.category} />
           </Descriptions.Item>
