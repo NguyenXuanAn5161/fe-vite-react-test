@@ -16,13 +16,13 @@ import {
   AiOutlineReload,
 } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
-import { callDeleteUser, callFetchListBook } from "../../../services/api";
+import { callDeleteBook, callFetchListBook } from "../../../services/api";
 import { FORMAT_DATE_DISPLAY } from "../../../utils/constant";
-import UserExport from "../User/data/UserExport";
 import BookModalCreate from "./BookModalCreate";
 import BookModalUpdate from "./BookModalUpdate";
 import BookViewDetail from "./BookViewDetal";
 import InputSearch from "./InputSearch";
+import BookExport from "./data/BookExport";
 
 const BookTable = () => {
   const [listBook, setListBook] = useState([]);
@@ -65,10 +65,10 @@ const BookTable = () => {
     setIsLoading(false);
   };
 
-  const handleDeleteUser = async (userId) => {
-    const res = await callDeleteUser(userId);
+  const handleDeleteBook = async (bookId) => {
+    const res = await callDeleteBook(bookId);
     if (res && res.data) {
-      message.success("Xoá user thành công!");
+      message.success("Xoá sách thành công!");
       await fetchBook();
     } else {
       notification.error({
@@ -148,7 +148,7 @@ const BookTable = () => {
               description={"Bạn có chắc chắn muốn xóa sách này?"}
               okText="Xác nhận"
               cancelText="Hủy"
-              onConfirm={() => handleDeleteUser(record._id)}
+              onConfirm={() => handleDeleteBook(record._id)}
             >
               <span>
                 <AiOutlineDelete
@@ -275,7 +275,7 @@ const BookTable = () => {
         setDataViewDetail={setDataViewDetail}
       />
 
-      <UserExport
+      <BookExport
         openModalExport={openModalExport}
         setOpenModalExport={setOpenModalExport}
         listBook={listBook}
