@@ -18,9 +18,9 @@ import {
 import { CiEdit } from "react-icons/ci";
 import { callDeleteUser, callFetchListBook } from "../../../services/api";
 import { FORMAT_DATE_DISPLAY } from "../../../utils/constant";
-import UserModalUpdate from "../User/UserModalUpdate";
 import UserExport from "../User/data/UserExport";
 import BookModalCreate from "./BookModalCreate";
+import BookModalUpdate from "./BookModalUpdate";
 import BookViewDetail from "./BookViewDetal";
 import InputSearch from "./InputSearch";
 
@@ -281,7 +281,7 @@ const BookTable = () => {
         listBook={listBook}
       />
 
-      <UserModalUpdate
+      <BookModalUpdate
         openModalUpdate={openModalUpdate}
         setOpenModalUpdate={setOpenModalUpdate}
         dataUpdate={dataUpdate}
