@@ -12,42 +12,40 @@ import React, { useEffect, useState } from "react";
 import {
   AiOutlineDelete,
   AiOutlineExport,
-  AiOutlineImport,
   AiOutlinePlus,
   AiOutlineReload,
 } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 import { callDeleteUser, callFetchListBook } from "../../../services/api";
-import UserModalCreate from "../User/UserModalCreate";
+import { FORMAT_DATE_DISPLAY } from "../../../utils/constant";
 import UserModalUpdate from "../User/UserModalUpdate";
 import UserExport from "../User/data/UserExport";
-import UserImport from "../User/data/UserImport";
+import BookModalCreate from "./BookModalCreate";
 import BookViewDetail from "./BookViewDetal";
 import InputSearch from "./InputSearch";
 
 const BookTable = () => {
-  const [listUser, setListUser] = useState([]);
+  const [listBook, setListBook] = useState([]);
   const [current, setCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(5);
   const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [filter, setFilter] = useState("");
   // const [sortQuery, setSortQuery] = useState("");
-  const [sortQuery, setSortQuery] = useState(""); // default sort by updateAt mới nhất
+  const [sortQuery, setSortQuery] = useState("sort=-updatedAt"); // default sort by updateAt mới nhất
   const [dataViewDetail, setDataViewDetail] = useState("");
   const [openViewDetail, setOpenViewDetail] = useState(false);
   const [openModalCreate, setOpenModalCreate] = useState(false);
-  const [openModalImport, setOpenModalImport] = useState(false);
   const [openModalExport, setOpenModalExport] = useState(false);
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
   const [dataUpdate, setDataUpdate] = useState("");
 
   useEffect(() => {
-    fetchUser();
+    fetchBook();
   }, [current, pageSize, filter, sortQuery]);
 
   // khi thay doi current va pageSize thi search died!
-  const fetchUser = async () => {
+  const fetchBook = async () => {
     setIsLoading(true);
     let query = `current=${current}&pageSize=${pageSize}`;
     if (filter) {
@@ -60,7 +58,7 @@ const BookTable = () => {
 
     const res = await callFetchListBook(query);
     if (res && res.data) {
-      setListUser(res.data.result);
+      setListBook(res.data.result);
       setTotal(res.data.meta.total);
     }
 
@@ -71,7 +69,7 @@ const BookTable = () => {
     const res = await callDeleteUser(userId);
     if (res && res.data) {
       message.success("Xoá user thành công!");
-      await fetchUser();
+      await fetchBook();
     } else {
       notification.error({
         message: "Đã có lỗi xảy ra!",
@@ -117,6 +115,16 @@ const BookTable = () => {
     {
       title: "Giá tiền",
       dataIndex: "price",
+      render: (text, record, index) => {
+        return (
+          <span>
+            {new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(record?.price ?? 0)}
+          </span>
+        );
+      },
       sorter: true,
     },
     {
@@ -124,7 +132,7 @@ const BookTable = () => {
       dataIndex: "updatedAt",
       render: (text, record, index) => {
         return (
-          <span>{moment(record.updatedAt).format("DD-MM-YYYY HH:mm:ss")}</span>
+          <span>{moment(record.updatedAt).format(FORMAT_DATE_DISPLAY)}</span>
         );
       },
       sorter: true,
@@ -136,8 +144,8 @@ const BookTable = () => {
           <>
             <Popconfirm
               placement="leftTop"
-              title={"Xác nhận xóa người dùng"}
-              description={"Bạn có chắc chắn muốn xóa người dùng này?"}
+              title={"Xác nhận xóa sách"}
+              description={"Bạn có chắc chắn muốn xóa sách này?"}
               okText="Xác nhận"
               cancelText="Hủy"
               onConfirm={() => handleDeleteUser(record._id)}
@@ -172,13 +180,6 @@ const BookTable = () => {
           onClick={() => setOpenModalExport(true)}
         >
           Export
-        </Button>
-        <Button
-          icon={<AiOutlineImport />}
-          type="primary"
-          onClick={() => setOpenModalImport(true)}
-        >
-          Import
         </Button>
         <Button
           icon={<AiOutlinePlus />}
@@ -241,7 +242,7 @@ const BookTable = () => {
             title={renderHeader}
             loading={isLoading}
             columns={columns}
-            dataSource={listUser}
+            dataSource={listBook}
             onChange={onChange}
             rowKey="_id"
             pagination={{
@@ -261,10 +262,10 @@ const BookTable = () => {
         </Col>
       </Row>
 
-      <UserModalCreate
+      <BookModalCreate
         openModalCreate={openModalCreate}
         setOpenModalCreate={setOpenModalCreate}
-        fetchUser={fetchUser}
+        fetchBook={fetchBook}
       />
 
       <BookViewDetail
@@ -274,16 +275,10 @@ const BookTable = () => {
         setDataViewDetail={setDataViewDetail}
       />
 
-      <UserImport
-        openModalImport={openModalImport}
-        setOpenModalImport={setOpenModalImport}
-        fetchUser={fetchUser}
-      />
-
       <UserExport
         openModalExport={openModalExport}
         setOpenModalExport={setOpenModalExport}
-        listUser={listUser}
+        listBook={listBook}
       />
 
       <UserModalUpdate
@@ -291,7 +286,7 @@ const BookTable = () => {
         setOpenModalUpdate={setOpenModalUpdate}
         dataUpdate={dataUpdate}
         setDataUpdate={setDataUpdate}
-        fetchUser={fetchUser}
+        fetchBook={fetchBook}
       />
     </>
   );
